@@ -460,7 +460,7 @@ class HealthKitReporter {
   ///
   /// Warning: The [unit] should be valid. See [preferredUnits].
   ///
-  static Future<dynamic> statisticsQuery(
+  static Future<Statistics> statisticsQuery(
       QuantityType type, String unit, Predicate predicate) async {
     final arguments = <String, dynamic>{
       'identifier': type.identifier,
@@ -469,9 +469,10 @@ class HealthKitReporter {
     arguments.addAll(predicate.map);
     final result =
         await _methodChannel.invokeMethod('statisticsQuery', arguments);
-    // final Map<String, dynamic> map = jsonDecode(result);
-    // final statistics = Statistics.fromJson(map);
-    return result;
+    print(result);
+    final Map<String, dynamic> map = jsonDecode(result);
+    final statistics = Statistics.fromJson(map);
+    return statistics;
   }
 
   /// Returns [HeartbeatSerie] samples for the provided
